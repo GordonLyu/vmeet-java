@@ -1,0 +1,23 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      routes:
+        - id: socket-server
+          uri: lb://socket-server
+          predicates:
+            - Path=/test/**
+        # websocket 协议
+        - id: socket-server
+          uri: lb:ws://socket-server
+          predicates:
+            - Path=/**
+eureka:
+  client:
+    service-url:
+      register-with-eureka: true
+      fetch-registry: true
+      defaultZone: http://localhost:7500/eureka
