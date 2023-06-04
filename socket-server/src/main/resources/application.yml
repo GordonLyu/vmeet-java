@@ -3,6 +3,8 @@ server:
 spring:
   application:
     name: socket-server
+  kafka:
+    bootstrap-servers:
 eureka:
   client:
     service-url:

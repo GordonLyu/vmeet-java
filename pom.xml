@@ -14,16 +14,19 @@
         <module>gateway</module>
         <module>socket-server</module>
         <module>vmeet-common</module>
+        <module>vmeet-server</module>
+        <module>mail-server</module>
     </modules>
 
-    <packaging>pom</packaging>
+
     <groupId>com</groupId>
     <artifactId>vmeet</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
     <name>vmeet</name>
     <description>vmeet</description>
     <properties>
-        <java.version>17</java.version>
+        <java.version>8</java.version>
         <spring-cloud.version>2021.0.7</spring-cloud.version>
     </properties>
     <dependencies>
