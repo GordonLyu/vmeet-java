@@ -22,7 +22,6 @@ import javax.validation.constraints.NotNull;
  */
 
 @Slf4j
-@CrossOrigin
 @RestController
 @RequestMapping("/contact")
 public class ContactController {

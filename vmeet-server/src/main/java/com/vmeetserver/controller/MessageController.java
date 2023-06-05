@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
  * @author 像风如你
  * @since 2023-05-22
  */
-@CrossOrigin
 @RestController
 @RequestMapping("/message")
 public class MessageController {

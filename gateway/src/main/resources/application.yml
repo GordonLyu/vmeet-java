@@ -9,12 +9,11 @@ spring:
         - id: socket-server
           uri: lb://socket-server
           predicates:
-            - Path=/test/**
-        # webSocket 协议
+            - Path=/test/**,/socket/**
         - id: socket-server-ws
           uri: lb:ws://socket-server
           predicates:
-            - Path=/live/**
+            - Path=/live/**,/ws/**
         - id: vmeet-server
           uri: lb://vmeet-server
           predicates:
@@ -29,8 +28,6 @@ spring:
             allowedOrigins: "*"
             allowedHeaders: "*"
             allowedMethods: "*"
-      default-filters:
-        - DedupeResponseHeader=Vary Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_FIRST
 eureka:
   client:
     service-url:
