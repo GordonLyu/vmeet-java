@@ -16,6 +16,12 @@
         <java.version>8</java.version>
     </properties>
     <dependencies>
+        <!-- 公共包 -->
+        <dependency>
+            <groupId>com</groupId>
+            <artifactId>vmeet-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
         <!--Web项目必须加上-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
