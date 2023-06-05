@@ -17,7 +17,6 @@ import javax.annotation.Resource;
  * @since 2023/6/1
  */
 
-@CrossOrigin
 @RestController
 @RequestMapping("/mail")
 public class MailController {

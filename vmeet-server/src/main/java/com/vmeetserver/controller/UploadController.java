@@ -20,7 +20,6 @@ import javax.servlet.http.HttpServletRequest;
  * @since 2023/5/23
  */
 @RestController
-@CrossOrigin
 @Slf4j
 @RequestMapping("/upload")
 public class UploadController {

@@ -25,7 +25,6 @@ import javax.validation.constraints.NotNull;
  * @author 像风如你
  * @since 2023-05-22
  */
-@CrossOrigin
 @RestController
 @RequestMapping("/user")
 public class UserController {
