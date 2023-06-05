@@ -17,7 +17,12 @@
 		<spring-cloud.version>2021.0.7</spring-cloud.version>
 	</properties>
 	<dependencies>
-
+		<!-- 公共包 -->
+		<dependency>
+			<groupId>com</groupId>
+			<artifactId>vmeet-common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 		<!-- 邮箱验证码 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
