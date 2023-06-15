@@ -2,4 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.vmeetserver.mapper.MessageMapper">
 
+    <select id="selectMessage" resultType="com.vmeetserver.entity.Message">
+        select * from message where sender_id = #{senderId} and receiver_id = #{receiverId}
+                or
+            sender_id = #{receiverId} and receiver_id = #{senderId}
+    </select>
+
+    <select id="pageMessage" resultType="com.vmeetserver.entity.Message">
+        <bind name="start" value="(pageMessage.current-1)*pageMessage.size" />
+        select * from
+                     (select * from message  where sender_id = #{senderId} and receiver_id = #{pageMessage.id}
+                                             or sender_id = #{pageMessage.id} and receiver_id = #{senderId}
+                                             order by timestamp desc
+                                             limit #{start}, #{pageMessage.size}) a
+                 order by timestamp;
+    </select>
+
+    <select id="getMessageCount" resultType="Integer">
+        select count(id) from message where sender_id = #{senderId} and receiver_id = #{receiverId}
+                                         or
+                                          sender_id = #{receiverId} and receiver_id = #{senderId}
+    </select>
 </mapper>

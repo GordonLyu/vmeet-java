@@ -13,11 +13,11 @@ spring:
         - id: socket-server-ws
           uri: lb:ws://socket-server
           predicates:
-            - Path=/live/**,/ws/**
+            - Path=/live/**,/chat/**
         - id: vmeet-server
           uri: lb://vmeet-server
           predicates:
-            - Path=/user/**,/contact/**,/img/**,/static/**
+            - Path=/user/**,/contact/**,/message/**,/img/**,/static/**
         - id: mail-server
           uri: lb://mail-server
           predicates:
