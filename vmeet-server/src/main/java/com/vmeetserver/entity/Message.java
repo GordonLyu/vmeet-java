@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  * <p>
@@ -17,6 +18,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
+@ToString
 public class Message implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -30,27 +32,27 @@ public class Message implements Serializable {
     /**
      * 发送者id
      */
-    private Integer msgSenderId;
+    private Integer senderId;
 
     /**
      * 接收者id
      */
-    private Integer msgReceiverId;
+    private Integer receiverId;
 
     /**
      * 消息内容
      */
-    private String msgContent;
+    private String content;
 
     /**
      * 消息类型
      */
-    private String msgType;
+    private String type;
 
     /**
      * 发送时间
      */
-    private Date msgTimestamp;
+    private Date timestamp;
 
 
 }
