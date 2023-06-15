@@ -38,11 +38,37 @@ public class ContactController {
         return contactService.getContact(loginId);
     }
 
+
+    // 获取一位联系人信息
+    @SaCheckLogin
+    @GetMapping("{uid}")
+    public Result getOneContact(@PathVariable Integer uid){
+        int loginId = StpUtil.getLoginIdAsInt();
+        return contactService.getOneContact(uid);
+    }
+
+    // 获取待接受添加联系人列表
+    @SaCheckLogin
+    @GetMapping("/wait/add")
+    Result getWaitAddContactList(){
+        Integer loginId = StpUtil.getLoginIdAsInt();
+        return contactService.getWaitAddContactList(loginId);
+    }
+
+    // 获取申请待被同意联系人列表
+    @SaCheckLogin
+    @GetMapping("/wait/agree")
+    Result getAppliedAddContactList(){
+        Integer loginId = StpUtil.getLoginIdAsInt();
+        return contactService.getAppliedAddContactList(loginId);
+    }
+
     // 添加联系人
     @SaCheckLogin
     @PostMapping("/add")
     public Result addContact(@RequestBody ContactVo contactVo){
-        return contactService.addContact(contactVo);
+        Integer login = StpUtil.getLoginIdAsInt();
+        return contactService.addContact(login, contactVo);
     }
 
     // 删除联系人
