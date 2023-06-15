@@ -71,7 +71,8 @@ public class LiveSocketServer {
     }
 
     @OnClose
-    public void onClose() {
+    public void onClose(Session session) {
+        webSocketMap.remove(userId);
         System.out.println("连接关闭");
     }
 
