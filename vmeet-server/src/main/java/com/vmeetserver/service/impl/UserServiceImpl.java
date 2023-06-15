@@ -125,6 +125,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Result getOneUser(Integer id) {
         User user = userMapper.SelectUserById(id);
-        return null;
+        UserDto userDto = new ModelMapper().map(user, UserDto.class);
+        return Result.success(userDto);
     }
 }

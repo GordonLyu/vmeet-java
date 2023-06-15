@@ -2,6 +2,7 @@ package com.vmeetserver.mapper;
 
 import com.vmeetserver.entity.User;
 import com.vmeetserver.entity.dto.ContactDto;
+import com.vmeetserver.entity.dto.UserDto;
 import com.vmeetserver.entity.vo.SignUpVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
