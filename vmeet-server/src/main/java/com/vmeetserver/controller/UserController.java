@@ -7,7 +7,6 @@ import com.vmeetcommon.utils.Result;
 import com.vmeetserver.entity.User;
 import com.vmeetserver.entity.vo.ChangeUserMsg;
 import com.vmeetserver.entity.vo.SignUpVo;
-import com.vmeetserver.mapper.UserMapper;
 import com.vmeetserver.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -79,7 +78,8 @@ public class UserController {
     @SaCheckLogin
     @GetMapping("/is-login")
     Result isLogin (){
-        return Result.success();
+        Integer loginId = StpUtil.getLoginIdAsInt();
+        return userService.getOneUser(loginId);
     }
 
     // 获取一位用户的基本信息 - 未完成

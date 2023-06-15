@@ -1,6 +1,8 @@
 package com.socketserver.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
@@ -11,17 +13,17 @@ import java.util.Date;
  */
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
-    public User() {}
-    public User(String id, String msg, String type) {
-        this.id = id;
-        this.msg = msg;
-        this.type = type;
-        this.date = new Date();
-    }
-
-    private String id;
-    private String msg;
+    private Integer id;
+    private Integer to;
+    private String content;
     private String type;
-    private Date date;
+
+    public User(Integer id, String msg, String type){
+        this.id = id;
+        this.content = msg;
+        this.type = type;
+    }
 }
