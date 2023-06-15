@@ -18,8 +18,17 @@ public interface ContactService {
     // 获取联系人
     Result getContact(Integer userId);
 
+    // 获取一位联系人信息
+    Result getOneContact(Integer uid);
+
+    // 获取待接受添加联系人列表
+    Result getWaitAddContactList(Integer loginId);
+
+    // 获取申请待被同意联系人列表
+    Result getAppliedAddContactList(Integer loginId);
+
     // 添加联系人
-    Result addContact(ContactVo contactVo);
+    Result addContact(Integer loginId, ContactVo contactVo);
 
     // 删除联系人
     Result deleteContact(Integer userId,Integer id);

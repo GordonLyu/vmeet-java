@@ -3,8 +3,20 @@
 <mapper namespace="com.vmeetserver.mapper.ContactMapper">
 
     <select id="getContact" resultType="Integer">
-        select contact_user_id
-        from contact where user_id = #{userId}
+        select contact_user_id from contact where contact_user_id in
+            (select user_id from contact where contact_user_id=#{userId}) and user_id=#{userId}
+    </select>
+
+    <select id="selectWaitAddContactList" resultType="com.vmeetserver.entity.dto.ContactDto">
+        select id, username, nickname, avatar, username, status from user where id in
+            (select user_id from contact where user_id not in
+                (select contact_user_id from contact where user_id=#{userId}) and contact_user_id=#{userId})
+    </select>
+
+    <select id="selectAppliedAddContactList" resultType="com.vmeetserver.entity.dto.ContactDto">
+        select id, username, nickname, avatar, username, status from user where id in
+            (select contact_user_id from contact where contact_user_id not in
+               (select user_id from contact where contact_user_id=#{userId}) and user_id=#{userId})
     </select>
 
     <insert id="addContact">
@@ -17,5 +29,4 @@
         from contact
         where user_id=#{userId} and contact_user_id = #{id}
     </delete>
-
 </mapper>

@@ -11,6 +11,8 @@ import com.vmeetserver.service.ContactService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,17 +36,47 @@ public class ContactServiceImpl implements ContactService {
     @Override
     public Result getContact(Integer userId){
         List<Integer> uidList = contactMapper.getContact(userId);
+        if(uidList.size() == 0){
+            uidList.add(-1);
+        }
         List<ContactDto> contactsDto = userMapper.selectContacts(uidList);
         return Result.success(contactsDto);
     }
 
     @Override
-    public Result addContact(ContactVo contactVo) {
+    public Result getOneContact(Integer uid){
+        List<Integer> uidList = new ArrayList<>();
+        uidList.add(uid);
+        List<ContactDto> contactsDto = userMapper.selectContacts(uidList);
+        if(contactsDto.size() == 0){
+            return Result.fail(400,"未找到此联系人");
+        }
+        return Result.success(contactsDto.get(0));
+    }
+
+    @Override
+    public Result getWaitAddContactList(Integer loginId) {
+        List<ContactDto> contactList = contactMapper.selectWaitAddContactList(loginId);
+        return Result.success("待接受添加联系人列表", contactList);
+    }
+
+    @Override
+    public Result getAppliedAddContactList(Integer loginId) {
+        List<ContactDto> contactList = contactMapper.selectAppliedAddContactList(loginId);
+        return Result.success("申请待被同意联系人列表", contactList);
+    }
+
+    @Override
+    public Result addContact(Integer loginId, ContactVo contactVo) {
         User user = userMapper.SelectUser(contactVo.getUsername());
         if (user == null) {
             return Result.fail("用户不存在");
         }
-        int loginId = StpUtil.getLoginIdAsInt();
+
+        if(contactMapper.isAddedContact(loginId, user.getId())){
+            return Result.success(202, "已添加过该联系人", null);
+        }
+
         int i = contactMapper.addContact(loginId, user.getId());
         if (i <= 0) {
             return Result.fail(500, "插入失败");
