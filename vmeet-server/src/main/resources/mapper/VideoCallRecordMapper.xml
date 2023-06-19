@@ -2,4 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.vmeetserver.mapper.VideoCallRecordMapper">
 
+    <insert id="insertRecord">
+        insert into video_call_record (video_caller_id, video_receiver_id, start_time, end_time, duration)
+        values (#{item.callerId}, #{item.receiverId}, #{item.startTime}, #{item.endTime}, #{item.duration})
+    </insert>
+
+    <select id="getRecord" resultType="com.vmeetserver.entity.VideoCallRecord">
+        select video_caller_id, video_receiver_id, start_time, end_time, duration
+        from video_call_record
+        where video_caller_id = #{callerId}
+          and video_receiver_id = #{receiverId}
+    </select>
+
+    <delete id="delRecord">
+        delete
+        from video_call_record
+        where video_caller_id = #{item.callerId}
+          and video_receiver_id = #{item.receiverId}
+          and start_time = #{item.startTime}
+    </delete>
 </mapper>

@@ -17,7 +17,7 @@ spring:
         - id: vmeet-server
           uri: lb://vmeet-server
           predicates:
-            - Path=/user/**,/contact/**,/message/**,/img/**,/static/**
+            - Path=/user/**,/contact/**,/message/**,/videoCallRecord/**,/img/**,/static/**,
         - id: mail-server
           uri: lb://mail-server
           predicates:
