@@ -56,9 +56,9 @@ public class MessageController {
 
     //删除聊天消息
     @SaCheckLogin
-    @DeleteMapping("/del")
-    Result deleteMessage(@RequestBody Message message){
-        return messageService.deleteMessage(message);
+    @DeleteMapping("/{mid}")
+    Result deleteMessage(@PathVariable Integer mid){
+        return messageService.deleteMessage(mid);
     }
 
 }

@@ -35,5 +35,8 @@ public interface MessageService{
      */
     Result addMessage(AddMessageVo addMessageVo);
 
-    Result deleteMessage(Message message);
+    /**
+     * 删除聊天消息
+     */
+    Result deleteMessage(Integer mid);
 }
