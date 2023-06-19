@@ -1,7 +1,9 @@
 package com.vmeetserver.service;
 
+import com.vmeetcommon.utils.Result;
 import com.vmeetserver.entity.VideoCallRecord;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.vmeetserver.entity.vo.RecordVo;
 
 /**
  * <p>
@@ -13,4 +15,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface VideoCallRecordService{
 
+    Result addRecord(RecordVo recordVo);
+
+    Result getRecord(RecordVo recordVo);
+
+    Result delRecord(RecordVo recordVo);
 }
