@@ -4,6 +4,7 @@ package com.vmeetserver.controller;
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.stp.StpUtil;
 import com.vmeetcommon.utils.Result;
+import com.vmeetserver.entity.Message;
 import com.vmeetserver.entity.vo.AddMessageVo;
 import com.vmeetserver.entity.vo.PageMessageVo;
 import com.vmeetserver.service.MessageService;
@@ -25,13 +26,6 @@ public class MessageController {
 
     @Resource
     private MessageService messageService;
-
-    // 获取消息
-    @SaCheckLogin
-    @GetMapping("/{uid}")
-    Result getMessage(@PathVariable Integer uid){
-        return Result.success();
-    }
 
     // 倒序分页获取消息
     @SaCheckLogin
@@ -58,6 +52,13 @@ public class MessageController {
     Result addMessage(@RequestBody AddMessageVo addMessageVo){
         addMessageVo.setSenderId(StpUtil.getLoginIdAsInt());
         return messageService.addMessage(addMessageVo);
+    }
+
+    //删除聊天消息
+    @SaCheckLogin
+    @DeleteMapping("/del")
+    Result deleteMessage(@RequestBody Message message){
+        return messageService.deleteMessage(message);
     }
 
 }

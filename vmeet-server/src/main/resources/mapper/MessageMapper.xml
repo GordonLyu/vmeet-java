@@ -23,4 +23,11 @@
                                          or
                                           sender_id = #{receiverId} and receiver_id = #{senderId}
     </select>
+
+    <delete id="delMessage">
+        delete
+        from message
+        where sender_id = #{senderId} and receiver_id = #{receiverId} and timestamp = #{timestamp};
+    </delete>
+
 </mapper>

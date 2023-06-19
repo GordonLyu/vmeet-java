@@ -40,12 +40,12 @@ public class VideoCallRecord implements Serializable {
     /**
      * 通话开始时间
      */
-    private Date startTime;
+    private String startTime;
 
     /**
      * 通话结束时间
      */
-    private Date endTime;
+    private String endTime;
 
     /**
      * 通话时长（单位：秒）

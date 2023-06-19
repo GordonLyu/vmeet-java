@@ -41,4 +41,6 @@ public interface MessageMapper{
     @Insert("insert into message(sender_id, receiver_id, content, type)" +
             " values(#{senderId},#{receiverId},#{content},#{type})")
     void insertMessage(AddMessageVo addMessageVo);
+
+    int delMessage(Integer senderId, Integer receiverId, String timestamp);
 }
