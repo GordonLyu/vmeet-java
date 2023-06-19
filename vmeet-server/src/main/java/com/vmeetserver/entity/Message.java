@@ -52,7 +52,7 @@ public class Message implements Serializable {
     /**
      * 发送时间
      */
-    private Date timestamp;
+    private String timestamp;
 
 
 }
