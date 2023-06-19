@@ -60,8 +60,8 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public Result deleteMessage(Message message) {
-        int i = messageMapper.delMessage(message.getSenderId(), message.getReceiverId(), message.getTimestamp());
+    public Result deleteMessage(Integer mid) {
+        int i = messageMapper.delMessage(mid);
         if (i <= 0) {
             return Result.fail(400, "操作失败");
         }

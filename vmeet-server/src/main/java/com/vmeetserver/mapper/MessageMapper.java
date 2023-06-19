@@ -6,6 +6,7 @@ import com.vmeetserver.entity.vo.PageMessageVo;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -42,5 +43,9 @@ public interface MessageMapper{
             " values(#{senderId},#{receiverId},#{content},#{type})")
     void insertMessage(AddMessageVo addMessageVo);
 
-    int delMessage(Integer senderId, Integer receiverId, String timestamp);
+    /**
+     * 删除聊天消息
+     */
+    @Select("delete from message where id = #{mid}")
+    int delMessage(Integer mid);
 }
