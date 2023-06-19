@@ -1,6 +1,7 @@
 package com.vmeetserver.service;
 
 import com.vmeetcommon.utils.Result;
+import com.vmeetserver.entity.Message;
 import com.vmeetserver.entity.vo.AddMessageVo;
 import com.vmeetserver.entity.vo.PageMessageVo;
 
@@ -33,4 +34,6 @@ public interface MessageService{
      * 存储用户消息
      */
     Result addMessage(AddMessageVo addMessageVo);
+
+    Result deleteMessage(Message message);
 }
