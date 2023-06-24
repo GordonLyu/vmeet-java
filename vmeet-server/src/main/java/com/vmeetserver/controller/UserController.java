@@ -131,7 +131,14 @@ public class UserController {
     @SaCheckLogin
     @PostMapping("/change-mail/send-mail")
     Result changeMailSendCode(String to){
-        return mailClient.changeMailCode(to);
+        if(userService.isExistEmail(to)){
+            return Result.fail(400,"该邮箱已被其他账号绑定");
+        }
+        User user = userService.getOneUserAllInfo(StpUtil.getLoginIdAsInt());
+        if(user.getEmail() == null || "".equals(user.getEmail())){
+            return mailClient.changeMailCode(to);
+        }
+        return mailClient.changeMailCode(user.getEmail());
     }
 
     // 验证修改邮箱验证码

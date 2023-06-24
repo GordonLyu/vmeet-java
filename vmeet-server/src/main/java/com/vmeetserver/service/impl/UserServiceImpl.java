@@ -38,15 +38,17 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             return Result.fail("用户不存在");
         }
-        String emailPrefix = user.getEmail().substring(0,user.getEmail().lastIndexOf('@'));
-        String emailSuffix = user.getEmail().substring(user.getEmail().lastIndexOf('@'));
-        String t;
-        if(emailPrefix.length()>4){
-            t = emailPrefix.substring(0, 3) + emailPrefix.substring(3).replaceAll(".", "*");
-        }else{
-            t = emailPrefix.charAt(0) + emailPrefix.substring(1).replaceAll(".", "*");
+        if(user.getEmail() != null){
+            String emailPrefix = user.getEmail().substring(0,user.getEmail().lastIndexOf('@'));
+            String emailSuffix = user.getEmail().substring(user.getEmail().lastIndexOf('@'));
+            String t;
+            if(emailPrefix.length()>4){
+                t = emailPrefix.substring(0, 3) + emailPrefix.substring(3).replaceAll(".", "*");
+            }else{
+                t = emailPrefix.charAt(0) + emailPrefix.substring(1).replaceAll(".", "*");
+            }
+            user.setEmail(t + emailSuffix);
         }
-        user.setEmail(t + emailSuffix);
 //        执行sa-token登录
         StpUtil.login(user.getId(), SaLoginConfig.setExtra("username", user.getUsername()));
         String decodePassword = JasyptEncryptorUtils.decode(user.getPassword());
@@ -145,15 +147,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public Result getOneUser(Integer id) {
         User user = userMapper.SelectUserById(id);
-        String emailPrefix = user.getEmail().substring(0,user.getEmail().lastIndexOf('@'));
-        String emailSuffix = user.getEmail().substring(user.getEmail().lastIndexOf('@'));
-        String t;
-        if(emailPrefix.length()>4){
-            t = emailPrefix.substring(0, 3) + emailPrefix.substring(3).replaceAll(".", "*");
-        }else{
-            t = emailPrefix.charAt(0) + emailPrefix.substring(1).replaceAll(".", "*");
+        if(user.getEmail() != null){
+            String emailPrefix = user.getEmail().substring(0,user.getEmail().lastIndexOf('@'));
+            String emailSuffix = user.getEmail().substring(user.getEmail().lastIndexOf('@'));
+            String t;
+            if(emailPrefix.length()>4){
+                t = emailPrefix.substring(0, 3) + emailPrefix.substring(3).replaceAll(".", "*");
+            }else{
+                t = emailPrefix.charAt(0) + emailPrefix.substring(1).replaceAll(".", "*");
+            }
+            user.setEmail(t + emailSuffix);
         }
-        user.setEmail(t + emailSuffix);
         UserDto userDto = new ModelMapper().map(user, UserDto.class);
         return Result.success(userDto);
     }
