@@ -1,6 +1,9 @@
 package com.vmeetserver.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
+import cn.dev33.satoken.stp.StpUtil;
+import cn.hutool.core.img.ImgUtil;
+import cn.hutool.crypto.digest.MD5;
 import com.vmeetcommon.utils.FileUploadUtil;
 import com.vmeetcommon.utils.Result;
 import com.vmeetserver.config.upload.AppProperties;
@@ -14,6 +17,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Base64;
+import java.util.Objects;
 
 /**
  * @author 像风如你
@@ -31,21 +40,23 @@ public class UploadController {
     AppProperties appProperties;
 
     @SaCheckLogin
-    @ResponseBody
-    @PostMapping(value = "/uploadFile")
-    public Result upload(@RequestParam(value = "File", required = false) MultipartFile multiFile,
-                         @RequestParam("id") Integer id) {
+    @PostMapping(value = "/avatar")
+    public Result upload(@RequestParam(value = "File", required = false) MultipartFile multiFile) {
+        Integer id = StpUtil.getLoginIdAsInt();
         try {
             Pair<Boolean, String> pair = checkFile(multiFile);
             if (!pair.getLeft()) {
                 return Result.fail(400, pair.getRight());
             }
-            log.info(multiFile.getOriginalFilename());
-            boolean b = FileUploadUtil.uploadToServer(multiFile, appProperties.getUploadPath(), multiFile.getOriginalFilename());
+            String fileName = "avatar-" + id;
+//            String fileSuffix = Objects.requireNonNull(multiFile.getOriginalFilename())
+//                    .substring(multiFile.getOriginalFilename().lastIndexOf('.'));
+            fileName = MD5.create().digestHex16(fileName) + ".jpg";
+            boolean b = FileUploadUtil.uploadToServer(multiFile, appProperties.getUploadPath()+"avatar/", fileName);
             if (!b) {
                 return Result.fail(500, "上传失败");
             }
-            return uploadService.upload(appProperties.getUploadPath() + multiFile.getOriginalFilename(), id);
+            return uploadService.uploadAvatar("/img/avatar/" + fileName, id);
         } catch (Exception e) {
             log.error("系统异常e:", e);
             return Result.fail(500, "上传失败");

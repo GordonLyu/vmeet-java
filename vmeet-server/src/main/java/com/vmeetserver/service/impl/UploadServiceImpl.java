@@ -20,16 +20,10 @@ public class UploadServiceImpl implements UploadService {
     UserMapper userMapper;
 
     @Override
-    public Result upload(String path,Integer id) {
+    public Result uploadAvatar(String path,Integer id) {
         log.info("路径： " + path);
 //        用户头像上传
-        int i = userMapper.upload(path,id);
-        if (i <= 0) {
-            log.error("上传成功，但数据更新失败");
-            return Result.fail(500, "上传成功，但数据更新失败");
-        }
-        log.info(i + "");
-        log.info("上传成功，数据更新成功");
+        userMapper.upload(path,id);
         return Result.success(path);
     }
 }
