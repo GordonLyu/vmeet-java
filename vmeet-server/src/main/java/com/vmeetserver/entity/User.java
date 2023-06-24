@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -19,6 +20,7 @@ import javax.validation.constraints.NotNull;
  * @since 2023-05-22
  */
 @Data
+@ToString
 @EqualsAndHashCode(callSuper = false)
 public class User implements Serializable {
 
@@ -57,5 +59,9 @@ public class User implements Serializable {
      */
     private String status;
 
+    /**
+     * 邮箱
+     */
+    private String email;
 
 }

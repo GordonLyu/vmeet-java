@@ -62,6 +62,12 @@
 <!--            <version>1.2.73</version>-->
 <!--        </dependency>-->
 
+        <!-- openfeign 依赖包-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+
         <!-- Sa-Token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->
         <dependency>
             <groupId>cn.dev33</groupId>

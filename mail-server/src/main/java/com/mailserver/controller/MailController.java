@@ -25,26 +25,42 @@ public class MailController {
     @Resource
     private MailService mailService;
 
-    // 发送邮箱
-    @PostMapping("/register/send-code")
-    Result registerMailCode(@RequestBody EmailMessage emailMessage){
-        if(emailMessage == null){
-            return Result.fail(400,"邮箱不能为空");
-        }else if(!emailMessage.getTo().matches("^[A-Za-z0-9]+([-._][A-Za-z0-9]+)*@[A-Za-z0-9]+(-[A-Za-z0-9]+)*(\\.[A-Za-z]{2,6}|[A-Za-z]{2,4}\\.[A-Za-z]{2,3})$")){
-            return Result.fail(400,"邮箱格式不正确");
-        }
-        return mailService.registerMailCode(emailMessage.getTo());
+    // 发送注册邮箱验证码
+    @PostMapping("/register/send")
+    Result registerMailCode(String to){
+        return mailService.sendMailCode(to, "注册验证码", "注册操作");
     }
 
-    @GetMapping("/register/verify-code")
+    // 验证注册邮箱验证码
+    @PostMapping("/register/verify")
     Result registerVerifyCode(String email, String code){
-        if(email == null || email.equals("")){
-            return Result.fail(400,"邮箱不允许为空");
-        }else if(code == null || code.equals("")){
-            return Result.fail(400,"验证码不允许为空");
-        }
-        return mailService.registerVerifyCode(email, code);
+        return mailService.verifyMailCode(email, code);
     }
+
+    // 发送登录邮箱验证码
+    @PostMapping("/login/send")
+    Result loginMailCode(String to){
+        return mailService.sendMailCode(to, "登录验证码", "登录操作");
+    }
+
+    // 验证登录邮箱验证码
+    @PostMapping("/login/verify")
+    Result loginVerifyCode(String email, String code){
+        return mailService.verifyMailCode(email, code);
+    }
+
+    // 发送修改邮箱验证码
+    @PostMapping("/change-mail/send")
+    Result changeMailCode(String to){
+        return mailService.sendMailCode(to, "修改绑定邮箱验证码", "修改绑定邮箱操作");
+    }
+
+    // 验证修改邮箱验证码
+    @PostMapping("/change-mail/verify")
+    Result changeVerifyCode(String email, String code){
+        return mailService.verifyMailCode(email, code);
+    }
+
 
     // 测试接口-是否正常请求
     @GetMapping("/test")

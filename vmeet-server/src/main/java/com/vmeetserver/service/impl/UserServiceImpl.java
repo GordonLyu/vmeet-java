@@ -34,9 +34,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public Result login(User reqUser) {
         User user = userMapper.SelectUser(reqUser.getUsername());
+
         if (user == null) {
             return Result.fail("用户不存在");
         }
+        String emailPrefix = user.getEmail().substring(0,user.getEmail().lastIndexOf('@'));
+        String emailSuffix = user.getEmail().substring(user.getEmail().lastIndexOf('@'));
+        String t;
+        if(emailPrefix.length()>4){
+            t = emailPrefix.substring(0, 3) + emailPrefix.substring(3).replaceAll(".", "*");
+        }else{
+            t = emailPrefix.charAt(0) + emailPrefix.substring(1).replaceAll(".", "*");
+        }
+        user.setEmail(t + emailSuffix);
 //        执行sa-token登录
         StpUtil.login(user.getId(), SaLoginConfig.setExtra("username", user.getUsername()));
         String decodePassword = JasyptEncryptorUtils.decode(user.getPassword());
@@ -51,7 +61,17 @@ public class UserServiceImpl implements UserService {
         }
         return Result.fail("密码错误");
     }
-    
+
+    @Override
+    public Result loginByEmail(String email) {
+        User user = userMapper.selectUserByEmail(email);
+        if(user == null){
+            return Result.fail(400, "该邮箱未被注册或绑定");
+        }
+        user.setPassword(JasyptEncryptorUtils.decode(user.getPassword()));
+        return login(user);
+    }
+
     @Override
     public Result register(SignUpVo user) {
         user.setPassword(JasyptEncryptorUtils.encode(user.getPassword()));
@@ -125,7 +145,42 @@ public class UserServiceImpl implements UserService {
     @Override
     public Result getOneUser(Integer id) {
         User user = userMapper.SelectUserById(id);
+        String emailPrefix = user.getEmail().substring(0,user.getEmail().lastIndexOf('@'));
+        String emailSuffix = user.getEmail().substring(user.getEmail().lastIndexOf('@'));
+        String t;
+        if(emailPrefix.length()>4){
+            t = emailPrefix.substring(0, 3) + emailPrefix.substring(3).replaceAll(".", "*");
+        }else{
+            t = emailPrefix.charAt(0) + emailPrefix.substring(1).replaceAll(".", "*");
+        }
+        user.setEmail(t + emailSuffix);
         UserDto userDto = new ModelMapper().map(user, UserDto.class);
         return Result.success(userDto);
+    }
+
+    @Override
+    public User getOneUserAllInfo(Integer id) {
+        return userMapper.SelectUserById(id);
+    }
+
+    @Override
+    public Result changeEmail(String newEmail) {
+        Result result;
+        if(!userMapper.isExistEmail(newEmail)){
+            int i = userMapper.changeEmail(StpUtil.getLoginIdAsInt(), newEmail);
+            if(i > 0){
+                result = Result.success(200, "已修改邮箱", null);
+            }else{
+                result = Result.fail("邮箱修改失败");
+            }
+        }else{
+            result = Result.fail(400, "绑定邮箱已存在");
+        }
+        return result;
+    }
+
+    @Override
+    public Boolean isExistEmail(String email) {
+        return userMapper.isExistEmail(email);
     }
 }

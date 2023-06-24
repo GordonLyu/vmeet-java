@@ -17,6 +17,8 @@ public interface UserService {
 
     Result login(User user);
 
+    Result loginByEmail(String email);
+
     Result register(SignUpVo user);
 
     Result testRecoveryPassword(Integer uid);
@@ -26,5 +28,13 @@ public interface UserService {
     Result changeNickname(ChangeUserMsg user);
 
     Result getOneUser(Integer id);
+
+    User getOneUserAllInfo(Integer id);
+
+    // 更改邮箱
+    Result changeEmail(String email);
+
+    // 系统是否存在该邮箱
+    Boolean isExistEmail(String email);
 
 }

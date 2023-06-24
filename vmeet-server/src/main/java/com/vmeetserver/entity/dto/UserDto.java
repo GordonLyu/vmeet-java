@@ -46,4 +46,9 @@ public class UserDto implements Serializable {
      */
     private String token;
 
+    /**
+     * 邮箱
+     */
+    private String email;
+
 }
