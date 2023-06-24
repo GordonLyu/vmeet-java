@@ -8,5 +8,8 @@ import com.vmeetcommon.utils.Result;
  */
 
 public interface UploadService {
-    Result upload(String path,Integer id);
+
+    //上传头像
+    Result uploadAvatar(String path,Integer id);
+
 }
