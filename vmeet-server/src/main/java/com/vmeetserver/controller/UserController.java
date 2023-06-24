@@ -3,7 +3,9 @@ package com.vmeetserver.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.stp.StpUtil;
+import com.alibaba.fastjson2.JSON;
 import com.vmeetcommon.utils.Result;
+import com.vmeetserver.client.MailClient;
 import com.vmeetserver.entity.User;
 import com.vmeetserver.entity.vo.ChangeUserMsg;
 import com.vmeetserver.entity.vo.SignUpVo;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.constraints.NotNull;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -30,6 +34,9 @@ public class UserController {
 
     @Autowired
     UserService userService;
+
+    @Resource
+    MailClient mailClient;
 
     // 注册
     @PostMapping("/register")
@@ -74,7 +81,7 @@ public class UserController {
         return userService.changeNickname(user);
     }
 
-    // 验证是否登录 ?
+    // 验证是否登录
     @SaCheckLogin
     @GetMapping("/is-login")
     Result isLogin (){
@@ -87,6 +94,61 @@ public class UserController {
     @GetMapping("/{id}")
     Result getOneUser(@PathVariable @NotNull Integer id){
         return Result.success();
+    }
+
+    // 发送注册邮箱验证码
+    @PostMapping("/register/send-mail")
+    Result registerSendMailCode(String to){
+        return mailClient.registerMailCode(to);
+    }
+
+    // 验证注册邮箱验证码
+    @PostMapping("/register/verify-mail")
+    Result registerVerifyMailCode(String email, String code){
+        return mailClient.registerVerifyMailCode(email, code);
+    }
+
+    // 发送登录邮箱验证码
+    @PostMapping("/login/send-mail")
+    Result loginSendMailCode(String to){
+        if(!userService.isExistEmail(to)){
+            return Result.fail(400, "该邮箱未被注册或绑定");
+        }
+        return mailClient.loginMailCode(to);
+    }
+
+    // 验证登录邮箱验证码
+    @PostMapping("/login/verify-mail")
+    Result loginVerifyMailCode(String email, String code){
+        Result result = mailClient.loginVerifyMailCode(email, code);
+        if(result.getCode() == 200){
+            result = userService.loginByEmail(email);
+        }
+        return result;
+    }
+
+    // 发送修改邮箱验证码
+    @SaCheckLogin
+    @PostMapping("/change-mail/send-mail")
+    Result changeMailSendCode(String to){
+        return mailClient.changeMailCode(to);
+    }
+
+    // 验证修改邮箱验证码
+    @SaCheckLogin
+    @PostMapping("/change-mail/verify-mail")
+    Result changeMailVerifyCode(String email, String code){
+        Result result;
+        User user = userService.getOneUserAllInfo(StpUtil.getLoginIdAsInt());
+        if(user.getEmail() == null || "".equals(user.getEmail())){
+            result = mailClient.changeMailVerifyCode(email, code);
+        } else{
+            result = mailClient.changeMailVerifyCode(user.getEmail(), code);
+        }
+        if(result.getCode() == 200){
+            return userService.changeEmail(email);
+        }
+        return result;
     }
 }
 

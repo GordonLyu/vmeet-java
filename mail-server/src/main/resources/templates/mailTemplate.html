@@ -2,7 +2,7 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <body>
     <h2 style="margin-bottom: 1em;">尊敬的新用户，您好：</h2>
-    <h4>您正在进行<span class="emphasis" style="border-bottom: solid 1px #000;">注册操作</span>，请在<span class="emphasis" style="border-bottom: solid 1px #000;">五分钟内</span>输入以下验证码完成操作：</h4>
+    <h4>您正在进行<span class="emphasis" style="border-bottom: solid 1px #000;" th:text="${optionName}"></span>，请在<span class="emphasis" style="border-bottom: solid 1px #000;">五分钟内</span>输入以下验证码完成操作：</h4>
     <div class="code" style="text-align: center; margin: 50px;">
         <p style="width: 10em;margin: 0 auto;box-sizing: border-box;padding: 10px 15px;border-radius: 6px;background-color: #f1f1f1;box-shadow: 2px 2px 4px 0 #ddd;letter-spacing: 4px;"><span th:each="c:${code}" style="font-size: 1.8em;font-weight: bolder;color: #3a9aed;">[[${c}]]</span></p>
     </div>
