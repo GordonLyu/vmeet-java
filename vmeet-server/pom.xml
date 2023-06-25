@@ -98,19 +98,19 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>3.0.5</version>
+            <version>3.5.3.1</version>
         </dependency>
         <!-- 代码自动生成依赖 begin -->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-generator</artifactId>
-            <version>3.4.1</version>
+            <version>3.5.3</version>
         </dependency>
         <!-- velocity -->
         <dependency>
             <groupId>org.apache.velocity</groupId>
             <artifactId>velocity-engine-core</artifactId>
-            <version>2.0</version>
+            <version>2.3</version>
         </dependency>
         <!-- 代码自动生成依赖 end-->
 
@@ -119,6 +119,16 @@
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
     </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>5.8.20</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <plugins>
