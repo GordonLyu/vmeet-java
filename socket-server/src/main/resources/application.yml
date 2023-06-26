@@ -1,11 +1,52 @@
 server:
   port: 8050
-spring:
-  application:
-    name: socket-server
-#  kafka:
-#    bootstrap-servers:
+
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:7500/eureka
+
+spring:
+  application:
+    name: socket-server
+    #==============================================================
+    #spring-cloud-stream-Kafka配置 开始
+    #==============================================================
+  cloud:
+    stream:
+      default-binder: kafka #Default binder
+      bindings:
+        #缺省的输入、输出通道（配置自己定义的通道与哪个中间件交互）
+        ws_default_input:
+          destination: ws_default_topic
+          binder: kafka
+          group: ws_default_group
+          consumer:
+            concurrency: 5 #入站消费者的并发性
+        ws_default_output:
+          destination: ws_default_topic
+          binder: kafka
+          content-type: text/plain
+        #告警的输入、输出通道（多主题、分组测试用）
+        ws_alarm_input:
+          destination: ws_alarm_topic
+          binder: kafka
+          group: ws_alarm_group
+        ws_alarm_output:
+          destination: ws_alarm_topic
+          binder: kafka
+          content-type: text/plain
+        #kafka配置
+      kafka:
+        binder:
+          autoCreateTopics: true   # 自动创建topics
+          autoAddPartitions: true  #设置自动创建主题。
+          replicationFactor: 1  #设置主题的副本因子为1。
+          brokers: localhost:9092,localhost:9092  #Kafka的服务端列表
+          zkNodes: localhost:2181,localhost:2181  #Kafka服务端连接的ZooKeeper节点
+          requiredAcks: 1 #设置消息发送的确认模式
+  #==============================================================
+  #spring-cloud-stream-Kafka配置 结束
+  #==============================================================
+
+

@@ -2,6 +2,8 @@ package com.socketserver.config;
 
 import com.alibaba.fastjson2.JSONObject;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.*;
@@ -32,6 +34,9 @@ public class WebSocketServer {
      * 通道名称
      */
     private String socketname;
+
+//    @Autowired
+//    private KafkaTemplate<String, String> kafkaTemplate;
 
     /**
      * 发送消息到指定连接
@@ -84,10 +89,16 @@ public class WebSocketServer {
     @OnMessage
     public void onMessage(String message, Session session) {
         System.out.println("当前收到了消息：" + message);
+
+        // 发送消息到 Kafka 主题
+//        kafkaTemplate.send("websocket_topic", message);
+
         session.getAsyncRemote().sendText("来自服务器：" + this.socketname + "你的消息我收到啦");
     }
-
-    ;
+//    @Autowired
+//    public void setKafkaTemplate(KafkaTemplate<String, String> kafkaTemplate) {
+//        this.kafkaTemplate = kafkaTemplate;
+//    }
 
     /**
      * 向所有连接主动推送消息
