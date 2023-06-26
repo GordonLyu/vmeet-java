@@ -2,7 +2,6 @@ package com.vmeetserver.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.stp.StpUtil;
-import cn.hutool.core.img.ImgUtil;
 import cn.hutool.crypto.digest.MD5;
 import com.vmeetcommon.utils.FileUploadUtil;
 import com.vmeetcommon.utils.Result;
@@ -16,22 +15,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Base64;
-import java.util.Objects;
-
 /**
  * @author 像风如你
  * @since 2023/5/23
  */
 @RestController
 @Slf4j
-@RequestMapping("/upload")
-public class UploadController {
+@RequestMapping("/file")
+public class FileController {
 
     @Autowired
     UploadService uploadService;
@@ -40,7 +31,7 @@ public class UploadController {
     AppProperties appProperties;
 
     @SaCheckLogin
-    @PostMapping(value = "/avatar")
+    @PostMapping(value = "/update/avatar")
     public Result upload(@RequestParam(value = "File", required = false) MultipartFile multiFile) {
         Integer id = StpUtil.getLoginIdAsInt();
         try {
