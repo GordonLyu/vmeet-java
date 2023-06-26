@@ -16,6 +16,7 @@
         <module>vmeet-common</module>
         <module>vmeet-server</module>
         <module>mail-server</module>
+        <module>file-server</module>
     </modules>
 
 
