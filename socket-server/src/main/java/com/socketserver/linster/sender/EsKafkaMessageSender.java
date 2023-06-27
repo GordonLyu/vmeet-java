@@ -33,7 +33,7 @@ public class EsKafkaMessageSender {
      * 消息发送到告警通道：告警通道对应告警主题
      * @param message
      */
-    public void sendToAlarmChannel(String message){
-        channel.sendWsAlarmMessage().send(MessageBuilder.withPayload(message).build());
-    }
+//    public void sendToAlarmChannel(String message){
+//        channel.sendWsAlarmMessage().send(MessageBuilder.withPayload(message).build());
+//    }
 }

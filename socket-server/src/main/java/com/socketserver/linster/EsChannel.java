@@ -24,12 +24,12 @@ public interface EsChannel {
     /**
      * 告警发送消息通道名称
      */
-    String WS_ALARM_OUTPUT = "ws_alarm_output";
+//    String WS_ALARM_OUTPUT = "ws_alarm_output";
 
     /**
      * 告警接收消息通道名称
      */
-    String WS_ALARM_INPUT = "ws_alarm_input";
+//    String WS_ALARM_INPUT = "ws_alarm_input";
 
     /**
      * 缺省发送消息通道
@@ -42,8 +42,8 @@ public interface EsChannel {
      * 告警发送消息通道
      * @return channel 返回告警信息发送通道
      */
-    @Output(WS_ALARM_OUTPUT)
-    MessageChannel sendWsAlarmMessage();
+//    @Output(WS_ALARM_OUTPUT)
+//    MessageChannel sendWsAlarmMessage();
 
     /**
      * 缺省接收消息通道
@@ -56,6 +56,6 @@ public interface EsChannel {
      * 告警接收消息通道
      * @return channel 返回告警信息接收通道
      */
-    @Input(WS_ALARM_INPUT)
-    MessageChannel recieveWsAlarmMessage();
+//    @Input(WS_ALARM_INPUT)
+//    MessageChannel recieveWsAlarmMessage();
 }

@@ -26,16 +26,16 @@ public class EsKafkaMessageReceiveListener {
      */
     @StreamListener(EsChannel.WS_DEFAULT_INPUT)
     public void receive(Message<String> message){
-        log.info("{}订阅告警消息：通道 = ws_default_input，data = {}", LocalDateTime.now(), message);
+        log.info("{}订阅告警消息：通道 = ws_default_input(缺省通道)，data = {}", LocalDateTime.now(), message);
     }
 
     /**
      * 从告警通道接收消息
      * @param message
      */
-    @StreamListener(EsChannel.WS_ALARM_INPUT)
-    public void receiveAlarm(Message<String> message){
-        System.out.println("订阅告警消息：" + message);
-        log.info("{}订阅告警消息：通道 = ws_alarm_input，data = {}", LocalDateTime.now(), message);
-    }
+//    @StreamListener(EsChannel.WS_ALARM_INPUT)
+//    public void receiveAlarm(Message<String> message){
+//        System.out.println("订阅告警消息：" + message);
+//        log.info("{}订阅告警消息：通道 = ws_alarm_input，data = {}", LocalDateTime.now(), message);
+//    }
 }
