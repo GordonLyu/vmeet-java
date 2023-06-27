@@ -28,14 +28,14 @@ spring:
           binder: kafka
           content-type: text/plain
         #告警的输入、输出通道（多主题、分组测试用）
-        ws_alarm_input:
-          destination: ws_alarm_topic
-          binder: kafka
-          group: ws_alarm_group
-        ws_alarm_output:
-          destination: ws_alarm_topic
-          binder: kafka
-          content-type: text/plain
+#        ws_alarm_input:
+#          destination: ws_alarm_topic
+#          binder: kafka
+#          group: ws_alarm_group
+#        ws_alarm_output:
+#          destination: ws_alarm_topic
+#          binder: kafka
+#          content-type: text/plain
         #kafka配置
       kafka:
         binder:
