@@ -25,9 +25,9 @@ public class KafkaController {
         sender.sendToDefaultChannel(message);
     }
 
-    @PostMapping("/KafkaMessageSend2")
-    public void testKafkaMessageSend2(@RequestBody String message) {
-        sender.sendToAlarmChannel(message);
-    }
+//    @PostMapping("/KafkaMessageSend2")
+//    public void testKafkaMessageSend2(@RequestBody String message) {
+//        sender.sendToAlarmChannel(message);
+//    }
 
 }
