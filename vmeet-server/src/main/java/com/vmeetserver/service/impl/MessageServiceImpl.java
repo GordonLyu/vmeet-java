@@ -1,5 +1,6 @@
 package com.vmeetserver.service.impl;
 
+import com.vmeetcommon.utils.EmojiUtil;
 import com.vmeetcommon.utils.Result;
 import com.vmeetserver.entity.Message;
 import com.vmeetserver.entity.Page;
@@ -37,6 +38,12 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public Result pageMessage(Integer loginId, PageMessageVo pageMessageVO) {
         List<Message> messages = messageMapper.pageMessage(loginId, pageMessageVO);
+        // 解码emoji
+        for (int i = 0; i < messages.size(); i++){
+            Message message = messages.get(i);
+            message.setContent(EmojiUtil.decode(message.getContent()));
+            messages.set(i, message);
+        }
         Page<Message> page = new Page<>();
         BeanUtils.copyProperties(pageMessageVO, page);
         page.setList(messages);
@@ -48,6 +55,9 @@ public class MessageServiceImpl implements MessageService {
         PageMessageVo pageMessageVo = new PageMessageVo(receiverId, 1, 1);
         List<Message> messages = messageMapper.pageMessage(loginId, pageMessageVo);
         if (messages.size() != 0) {
+            Message message = messages.get(0);
+            message.setContent(EmojiUtil.decode(message.getContent()));
+            messages.set(0, message);
             return Result.success(messages.get(0));
         }
         return Result.success();
@@ -55,6 +65,7 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public Result addMessage(AddMessageVo addMessageVo) {
+        addMessageVo.setContent(EmojiUtil.encode(addMessageVo.getContent()));
         messageMapper.insertMessage(addMessageVo);
         return Result.success();
     }

@@ -5,6 +5,7 @@ import com.alibaba.fastjson2.JSONObject;
 import com.alibaba.fastjson2.JSONReader;
 import com.socketserver.entity.User;
 import com.socketserver.linster.sender.EsKafkaMessageSender;
+import com.vmeetcommon.utils.EmojiUtil;
 import com.vmeetcommon.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -66,6 +67,7 @@ public class ChatSocketServer {
     @OnMessage
     public void onMessage(String msg) throws IOException {
         System.out.println(msg);
+        msg = EmojiUtil.encode(msg);
         JSONObject jsonObject = JSON.parseObject(msg);
         String data = Result.success("消息", jsonObject).toJSON();
         Integer to = jsonObject.getInteger("to");
@@ -80,6 +82,7 @@ public class ChatSocketServer {
     void sendAll(String msg) throws IOException {
         System.out.println("kafka发送消息至socket客户端");
         sender.sendToDefaultChannel(msg);
+        msg = EmojiUtil.decode(msg);
         for (ChatSocketServer socket : socketMap.values()) {
             socket.session.getBasicRemote().sendText(msg);
         }
@@ -91,8 +94,10 @@ public class ChatSocketServer {
         for (ChatSocketServer socket1 : socketMap.values()) {
             System.out.println(socket1.uid);
         }
-        socket.session.getBasicRemote().sendText(msg);
-
+        msg = EmojiUtil.decode(msg);
+        try {
+            socket.session.getBasicRemote().sendText(msg);
+        }catch (Exception ignored){}
     }
 
     void sendSome(String msg, String[] ids) throws IOException {

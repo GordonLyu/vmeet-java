@@ -47,7 +47,27 @@
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-core</artifactId>
 		</dependency>
+		<!-- emoji -->
+		<dependency>
+			<groupId>com.github.binarywang</groupId>
+			<artifactId>java-emoji-converter</artifactId>
+			<version>1.0.1</version>
+		</dependency>
 	</dependencies>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.jodd</groupId>
+				<artifactId>jodd-http</artifactId>
+				<version>6.3.0</version>
+			</dependency>
+			<dependency>
+				<groupId>org.json</groupId>
+				<artifactId>json</artifactId>
+				<version>20230618</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 	<build>
 		<plugins>
 			<plugin>
