@@ -16,6 +16,7 @@ eureka:
       defaultZone: http://localhost:7500/eureka
 file:
   path:
+    root: C:/static/
     avatar: C:/static/img/avatar/
   file-type-array: .png,.jpg,.jpeg,.txt,.zip,.rar,.pdf,.xml,.xls,.MP4,.xlsx,.mp3,.wav
   max-file-size: 10000

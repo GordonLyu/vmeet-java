@@ -3,10 +3,7 @@ package com.vmeetserver.mapper;
 import com.vmeetserver.entity.Message;
 import com.vmeetserver.entity.vo.AddMessageVo;
 import com.vmeetserver.entity.vo.PageMessageVo;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -36,12 +33,20 @@ public interface MessageMapper{
      */
     Integer getMessageCount(Integer senderId, Integer receiverId);
 
+    @Select("select * from message where id = #{id}")
+    Message getOneMessageById(Integer id);
+
     /**
      * 储存用户消息
      */
     @Insert("insert into message(sender_id, receiver_id, content, type)" +
             " values(#{senderId},#{receiverId},#{content},#{type})")
     void insertMessage(AddMessageVo addMessageVo);
+
+
+    @Insert("insert into message(sender_id, receiver_id, content, type, original_filename)" +
+            " values(#{message.senderId},#{message.receiverId},#{message.content},#{message.type},#{originalFilename})")
+    void insertMessageAndFilename(@Param("message") AddMessageVo addMessageVo,@Param("originalFilename") String originalFilename);
 
     /**
      * 删除聊天消息

@@ -1,12 +1,13 @@
 package com.vmeetserver.client;
 
 import com.vmeetcommon.utils.Result;
+import feign.Response;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 文件请求客户端
@@ -25,4 +26,10 @@ public interface FileClient {
      */
     @PostMapping(value = "/file/update/avatar", consumes=MediaType.MULTIPART_FORM_DATA_VALUE)
     Result updateAvatar(@RequestPart MultipartFile file, @RequestParam Integer id);
+
+    @PostMapping(value = "/file/send/{senderId}/to/{uid}", consumes=MediaType.MULTIPART_FORM_DATA_VALUE)
+    Result sendFileMessage(@RequestPart MultipartFile file, @PathVariable Integer senderId, @PathVariable Integer uid);
+
+    @GetMapping("/file/download")
+    Response downloadMessageFile(@RequestParam String fileURL, @RequestParam String originalFilename);
 }

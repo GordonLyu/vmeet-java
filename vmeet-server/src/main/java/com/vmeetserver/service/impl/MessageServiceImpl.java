@@ -14,6 +14,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.io.File;
 import java.util.List;
 
 /**
@@ -42,6 +43,10 @@ public class MessageServiceImpl implements MessageService {
         for (int i = 0; i < messages.size(); i++){
             Message message = messages.get(i);
             message.setContent(EmojiUtil.decode(message.getContent()));
+            if("file".equals(message.getType())){
+                File file = new File("C:/static/" + message.getContent());
+                message.setSize(file.length());
+            }
             messages.set(i, message);
         }
         Page<Message> page = new Page<>();

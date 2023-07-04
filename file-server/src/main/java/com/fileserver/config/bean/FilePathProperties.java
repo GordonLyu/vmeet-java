@@ -14,6 +14,11 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties("file.path")
 public class FilePathProperties {
     /**
+     * 储存文件根目录
+     */
+    private String root;
+
+    /**
      * 存放头像路径
      */
     private String avatar;

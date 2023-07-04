@@ -54,5 +54,13 @@ public class Message implements Serializable {
      */
     private String timestamp;
 
+    /**
+     * 原始文件名，非文件为空
+     */
+    private String originalFilename;
 
+    /**
+     * 文件大小 bit
+     */
+    private Long size;
 }
