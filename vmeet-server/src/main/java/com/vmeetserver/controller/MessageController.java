@@ -50,6 +50,10 @@ public class MessageController {
     @SaCheckLogin
     @PutMapping("")
     Result addMessage(@RequestBody AddMessageVo addMessageVo){
+        // 内容大于300
+        if(addMessageVo.getContent().length()>300){
+            return Result.fail(400,"内容不能超过300个字符！");
+        }
         addMessageVo.setSenderId(StpUtil.getLoginIdAsInt());
         return messageService.addMessage(addMessageVo);
     }
